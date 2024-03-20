@@ -1,11 +1,13 @@
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   return (
     <>
-      <h1> ge</h1>
       <RouterProvider router={router} />
+      <ToastContainer />
     </>
   );
 }
