@@ -2,13 +2,13 @@ import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { useLogInByGoogleMutation } from "@/redux/api/authSlice";
+import { useGetCurrentUserQuery, useLogInByGoogleMutation } from "@/redux/api/authSlice";
 function Login() {
-  // const [logInByGoogle, { error }] = useLogInByGoogleMutation();
+  const [logInByGoogle, { error }] = useLogInByGoogleMutation();
+  const { data } = useGetCurrentUserQuery();
+  console.log(data);
   const handleGoogleSucess = (data: any): void => {
-    console.log(data);
-    toast.success("get succuss");
-    // logInByGoogle("data");
+    logInByGoogle(data.credential);
   };
   const handleGoogleError = () => {
     toast.error("Login Failed");

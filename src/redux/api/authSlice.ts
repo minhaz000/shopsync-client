@@ -2,12 +2,16 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import User from "../../typeDef/user";
 export const authApi = createApi({
   reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_SERVER_URL}/auth` }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_SERVER_URL}/auth`,
+    credentials: "include",
+  }),
   tagTypes: ["getCurrentUser"],
+
   endpoints: (build) => ({
     //____________________ QUERY
-    getCurrentUser: build.query<User, number>({
-      query: (id) => ({ url: `/profile` }),
+    getCurrentUser: build.query<User, void>({
+      query: () => ({ url: `/profile` }),
       providesTags: ["getCurrentUser"],
     }),
 
@@ -16,7 +20,10 @@ export const authApi = createApi({
       query: (token) => ({
         url: "/google",
         method: "POST",
-        body: { token: token },
+        body: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }),
       invalidatesTags: ["getCurrentUser"],
     }),
